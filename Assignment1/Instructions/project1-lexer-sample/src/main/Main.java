@@ -9,12 +9,13 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		Lexer lex = new Lexer();
-	    Token t = lex.scan();
-	    System.out.printf("The first token's tag is: %d", t.tag);
-	    // Rather than printing the first token's tag, you need to loop
+		Token t = lex.scan();
+		System.out.printf("The first token's tag is: %d", t.tag);
+		// Rather than printing the first token's tag, you need to loop
 		// until EOF and output each token's type name and its actual
 		// string contents (lexeme).
 		System.out.write('\n');
 		System.out.println("HELLO IT IS THANH");
+		System.out.println("HELLO IT IS VISHNU");
 	}
 }
