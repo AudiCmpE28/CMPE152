@@ -15,5 +15,6 @@ public class Main {
 		// until EOF and output each token's type name and its actual
 		// string contents (lexeme).
 		System.out.write('\n');
+		System.out.println("HELLO IT IS THANH");
 	}
 }
