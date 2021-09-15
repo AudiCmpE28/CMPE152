@@ -24,8 +24,14 @@ public class Lexer {
       reserve( Type.Int  );  reserve( Type.Char  );
       reserve( Type.Bool );  reserve( Type.Float );
    }
+   public Token getNextToken() throws IOException{
+      Token t1 = scan();//this is the first token
+
+      return t1;//need to change this to the next token
+   }
 
    void readch() throws IOException { peek = (char)System.in.read(); }
+
    boolean readch(char c) throws IOException {
       readch();
       if( peek != c ) return false;
@@ -51,6 +57,8 @@ public class Lexer {
          if( readch('=') ) return Word.le;   else return new Token('<');
       case '>':
          if( readch('=') ) return Word.ge;   else return new Token('>');
+      case'`':
+         if( readch('`') ) return Word.eof;  else return new Token('`');
       }
       if( Character.isDigit(peek) ) {
          int v = 0;
