@@ -4,6 +4,7 @@ import java.io.IOException;
 import lexer.Lexer;
 import lexer.Token;
 import java.io.*;
+
 public class Main {
 
 	public static void main(String[] args) throws IOException {
@@ -13,6 +14,6 @@ public class Main {
 		// Rather than printing the first token's tag, you need to loop
 		// until EOF and output each token's type name and its actual
 		// string contents (lexeme).
-		
+
 	}
 }
