@@ -61,21 +61,18 @@ public class Lexer {
       // formed
 
       if (currentT.tag == 13) { // end of line token num is 13 for \r\n
+         System.out.println("Tag:: " + currentT.tag);
          return null;
       }
 
-      // if(currentT.tag >= 256 && currentT <= 275){//if its within table, match with
-      // label
-      // words.put(currentT.toString(), currentT.tag);
-      // }else{ //if not in table with label, its its own label such as: { label for {
-      // words.put(currentT.toString(), currentT.toString());
-      // }
       Word temp = new Word(currentT.toString(), currentT.tag);
-      // reserve(temp);
-      System.out.println("Word: " + temp.toString());
+      System.out.println("LABEL: " + temp.toString());
+
+      System.out.println("LABEL2: " + words.get(currentT.toString()));
+
+      // Label3: reserve(temp); // [], {}, +
 
       return currentT;
-
    }
 
    public Token scan() throws IOException {
