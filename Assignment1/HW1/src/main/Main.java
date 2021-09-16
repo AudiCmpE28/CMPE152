@@ -6,14 +6,21 @@ import lexer.Lexer;
 import lexer.Token;
 
 public class Main {
-
 	public static void main(String[] args) throws IOException {
-		Lexer lex = new Lexer();
-	    Token t = lex.scan();
-	    System.out.printf("The first token's tag is: %d", t.tag);
-	    // Rather than printing the first token's tag, you need to loop
-		// until EOF and output each token's type name and its actual
-		// string contents (lexeme).
-		System.out.write('\n');
+		Lexer mylexer = new Lexer();
+		while (true) {
+			Token parsedToken = mylexer.getNextToken();
+
+			if (parsedToken == null) {
+				System.out.println("End of Line");
+				break;
+			} else {
+
+				System.out.println("Token Number: " + parsedToken.tag);
+				System.out.write('\n');
+
+			}
+		}
 	}
+
 }

@@ -8,6 +8,7 @@ import java.util.HashMap;
 public class Lexer {
    public static int line = 1;
    char peek = ' ';
+   int i = 0;
    HashMap<String, Word> words = new HashMap<>();
 
    void reserve(Word w) {
@@ -32,6 +33,7 @@ public class Lexer {
 
    void readch() throws IOException {
       peek = (char) System.in.read();
+      // peek = (char) (System.in.read() + i);
    }
 
    boolean readch(char c) throws IOException {
@@ -43,14 +45,41 @@ public class Lexer {
    }
 
    public Token getNextToken() throws IOException {
-      Token t;
-      t = this.scan();
+      // readch(); // peek = (char) (System.in.read() + i);
+      for (;; readch()) { // for readch is true
+         if (peek == ' ' || peek == '\t') {
+            continue;
+         } else if (peek == '\n') {
+            line = line + 1;
+         } else {
+            break;
+         }
+      }
 
-      return nextT;
+      Token currentT = scan(); // will contain current token
+      // System.out.println("String:: " + currentT.toString()); //to identify string
+      // formed
+
+      if (currentT.tag == 13) { // end of line token num is 13 for \r\n
+         return null;
+      }
+
+      // if(currentT.tag >= 256 && currentT <= 275){//if its within table, match with
+      // label
+      // words.put(currentT.toString(), currentT.tag);
+      // }else{ //if not in table with label, its its own label such as: { label for {
+      // words.put(currentT.toString(), currentT.toString());
+      // }
+      Word temp = new Word(currentT.toString(), currentT.tag);
+      // reserve(temp);
+      System.out.println("Word: " + temp.toString());
+
+      return currentT;
+
    }
 
    public Token scan() throws IOException {
-      for (;; readch()) {
+      for (;; readch()) { // while readch is true
          if (peek == ' ' || peek == '\t')
             continue;
          else if (peek == '\n')
