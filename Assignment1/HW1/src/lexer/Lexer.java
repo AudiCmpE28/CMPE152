@@ -4,6 +4,7 @@ import symbols.Type;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Lexer {
    public static int line = 1;
@@ -57,8 +58,7 @@ public class Lexer {
       }
 
       Token currentT = scan(); // will contain current token
-      // System.out.println("String:: " + currentT.toString()); //to identify string
-      // formed
+      // System.out.println("String:: " + currentT.toString());
 
       if (currentT.tag == 13) { // end of line token num is 13 for \r\n
          System.out.println("Tag:: " + currentT.tag);
@@ -66,9 +66,14 @@ public class Lexer {
       }
 
       Word temp = new Word(currentT.toString(), currentT.tag);
-      System.out.println("LABEL: " + temp.toString());
-
-      System.out.println("LABEL2: " + words.get(currentT.toString()));
+      if (words.get(currentT.toString()) != null) {
+         System.out.println("HashTable: " + words.get(currentT.toString()));
+      } else if (temp.toString() == currentT.toString()) {
+         System.out.println("Word Label: " + temp.toString());
+      } else {
+         reserve(temp);
+         System.out.println("HashTable[Else]: " + words.get(currentT.toString()));
+      }
 
       // Label3: reserve(temp); // [], {}, +
 
