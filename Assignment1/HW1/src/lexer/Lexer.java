@@ -4,12 +4,10 @@ import symbols.Type;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Lexer {
    public static int line = 1;
    char peek = ' ';
-   int i = 0;
    HashMap<String, Word> words = new HashMap<>();
 
    void reserve(Word w) {
@@ -34,7 +32,6 @@ public class Lexer {
 
    void readch() throws IOException {
       peek = (char) System.in.read();
-      // peek = (char) (System.in.read() + i);
    }
 
    boolean readch(char c) throws IOException {
@@ -46,7 +43,6 @@ public class Lexer {
    }
 
    public Token getNextToken() throws IOException {
-      // readch(); // peek = (char) (System.in.read() + i);
       for (;; readch()) { // for readch is true
          if (peek == ' ' || peek == '\t') {
             continue;
@@ -66,18 +62,21 @@ public class Lexer {
       }
 
       Word temp = new Word(currentT.toString(), currentT.tag);
+
       if (words.get(currentT.toString()) != null) {
-         System.out.println("HashTable: " + words.get(currentT.toString()));
+         // System.out.println("HashTable: " + words.get(temp.toString()));
+         System.out.println("HashTable: ");
       } else if (temp.toString() == currentT.toString()) {
-         System.out.println("Word Label: " + temp.toString());
+         // System.out.println("Word Label: " + temp.toString());
+         System.out.println("Word Label: ");
       } else {
-         reserve(temp);
-         System.out.println("HashTable[Else]: " + words.get(currentT.toString()));
+         reserve(temp); // adds stuff like { } ; [ ]
+         // System.out.println("HashTable [Else]: " + words.get(currentT.toString()));
+         System.out.println("HashTable [Else]: ");
       }
 
-      // Label3: reserve(temp); // [], {}, +
-
       return currentT;
+
    }
 
    public Token scan() throws IOException {

@@ -14,11 +14,18 @@ public class Main {
 			if (parsedToken == null) {
 				System.out.println("End of Line");
 				break;
-			} else {
+			} else { // prints
+				if (parsedToken.tag >= 256 && parsedToken.tag <= 275) {
+					System.out.println("Token Number: " + parsedToken.tag);
+					System.out.println("Tokens: " + parsedToken.toString() + " " + parsedToken.toString());
+					System.out.write('\n');
+				} else {
+					System.out.println("Token Number: " + parsedToken.tag);
+					System.out.println("Tokens: " + parsedToken.toString() + " " + parsedToken.toString());
+					System.out.write('\n');
+				}
 
-				System.out.println("Token Number: " + parsedToken.tag);
-				System.out.write('\n');
-
+				// continue;
 			}
 		}
 	}
