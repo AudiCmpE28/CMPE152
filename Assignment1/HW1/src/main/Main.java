@@ -19,7 +19,6 @@ public class Main {
 					case 264:System.out.println("ID\t" + parsedToken.toString());continue;
 					case 270:System.out.println("NUM\t" + parsedToken.toString());continue;
 					case 272:System.out.println("REAL\t" + parsedToken.toString());continue;
-					case 275:System.out.println("WHILE\t" + parsedToken.toString());continue;
 				}//end of switch
 			}else System.out.println(parsedToken.toString() + "\t" + parsedToken.toString());
 			} //end of while
