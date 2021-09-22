@@ -57,6 +57,7 @@ public class Lexer {
       // System.out.println("String:: " + currentT.toString());
 
       if (currentT.tag == 13) { // end of line token num is 13 for \r\n
+         System.out.println("token:: " + currentT);
          System.out.println("Tag:: " + currentT.tag);
          return null;
       }
