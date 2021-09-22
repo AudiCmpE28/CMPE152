@@ -16,6 +16,7 @@ public class Main {
 				break;
 			}else if(parsedToken.tag >=256 && parsedToken.tag <=275){
 				switch(parsedToken.tag){
+					case 257:System.out.println("BASE_T\t" + parsedToken.toString());continue;
 					case 264:System.out.println("ID\t" + parsedToken.toString());continue;
 					case 270:System.out.println("NUM\t" + parsedToken.toString());continue;
 					case 272:System.out.println("REAL\t" + parsedToken.toString());continue;
