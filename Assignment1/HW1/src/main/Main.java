@@ -8,7 +8,7 @@ import lexer.Token;
 public class Main {
 	public static void main(String[] args) throws IOException {
 		Lexer mylexer = new Lexer();
-		System.out.print("Enter anything: ");
+		System.out.print("Enter the string to be parsed: ");
 		while (true) {
 			Token parsedToken = mylexer.getNextToken();
 			if (parsedToken == null) {
