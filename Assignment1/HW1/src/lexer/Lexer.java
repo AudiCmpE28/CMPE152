@@ -60,14 +60,13 @@ public class Lexer {
          System.out.println("Tag:: " + current_token.tag);
          return null;
       }
-<<<<<<< HEAD
 
-      Word temp = new Word(currentT.toString(), currentT.tag);
+      Word temp = new Word(current_token.toString(), current_token.tag);
 
-      if (words.get(currentT.toString()) != null) {
+      if (words.get(current_token.toString()) != null) {
          // System.out.println("HashTable: " + words.get(temp.toString()));
          System.out.println("HashTable: ");
-      } else if (temp.toString() == currentT.toString()) {
+      } else if (temp.toString() == current_token.toString()) {
          // System.out.println("Word Label: " + temp.toString());
          System.out.println("Word Label: ");
       } else {
@@ -75,12 +74,7 @@ public class Lexer {
          // System.out.println("HashTable [Else]: " + words.get(currentT.toString()));
          System.out.println("HashTable [Else]: ");
       }
-      return currentT;
-=======
-      
       return current_token;
-
->>>>>>> ffb1ed9d35738d1a3111fbca2d2f4125dc073dd7
    }
 
    public Token scan() throws IOException {
