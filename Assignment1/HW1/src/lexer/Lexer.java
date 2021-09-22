@@ -61,19 +61,6 @@ public class Lexer {
          return null;
       }
 
-      Word temp = new Word(current_token.toString(), current_token.tag);
-
-      if (words.get(current_token.toString()) != null) {
-         // System.out.println("HashTable: " + words.get(temp.toString()));
-         System.out.println("HashTable: ");
-      } else if (temp.toString() == current_token.toString()) {
-         // System.out.println("Word Label: " + temp.toString());
-         System.out.println("Word Label: ");
-      } else {
-         reserve(temp); // adds stuff like { } ; [ ]
-         // System.out.println("HashTable [Else]: " + words.get(currentT.toString()));
-         System.out.println("HashTable [Else]: ");
-      }
       return current_token;
    }
 
