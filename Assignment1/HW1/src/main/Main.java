@@ -16,15 +16,16 @@ public class Main {
 				break;
 			} else { // prints
 				if (parsedToken.tag >= 256 && parsedToken.tag <= 275) {
-					System.out.println("Token Number: " + parsedToken.tag);
-					System.out.println("Tokens: " + parsedToken.toString() + " " + parsedToken.toString());
+					if (parsedToken.tag == 257) {
+						System.out.println("BASE_T:      " + parsedToken.toString());
+						continue;
+					}
+					System.out.println("Token: " + parsedToken.toString());
 					System.out.write('\n');
 				} else {
-					System.out.println("Token Number: " + parsedToken.tag);
-					System.out.println("Tokens: " + parsedToken.toString() + " " + parsedToken.toString());
+					System.out.println("Tokens: " + parsedToken.tag + "          " + parsedToken.toString());
 					System.out.write('\n');
 				}
-
 				// continue;
 			}
 		}

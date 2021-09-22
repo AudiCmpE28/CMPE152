@@ -53,13 +53,14 @@ public class Lexer {
          }
       }
 
-      Token currentT = scan(); // will contain current token
-      // System.out.println("String:: " + currentT.toString());
+      Token current_token = scan(); // will contain current token
+      // System.out.println("String:: " + current_token.toString());
 
-      if (currentT.tag == 13) { // end of line token num is 13 for \r\n
-         System.out.println("Tag:: " + currentT.tag);
+      if (current_token.tag == 13) { // end of line token num is 13 for \r\n
+         System.out.println("Tag:: " + current_token.tag);
          return null;
       }
+<<<<<<< HEAD
 
       Word temp = new Word(currentT.toString(), currentT.tag);
 
@@ -75,6 +76,11 @@ public class Lexer {
          System.out.println("HashTable [Else]: ");
       }
       return currentT;
+=======
+      
+      return current_token;
+
+>>>>>>> ffb1ed9d35738d1a3111fbca2d2f4125dc073dd7
    }
 
    public Token scan() throws IOException {
@@ -153,6 +159,7 @@ public class Lexer {
          words.put(s, w);
          return w;
       }
+
       Token tok = new Token(peek);
       peek = ' ';
       return tok;
