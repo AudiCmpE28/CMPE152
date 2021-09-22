@@ -30,7 +30,7 @@ public class Main {
 					case 267:continue;
 					case 268:continue;
 					case 269:continue;
-					case 270:System.out.println("NUM\t " + parsedToken.toString());
+					case 270:System.out.println("NUM\t" + parsedToken.toString());
 					case 271:continue;
 					case 272:continue;
 					case 273:continue;
