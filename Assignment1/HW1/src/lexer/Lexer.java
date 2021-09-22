@@ -74,9 +74,7 @@ public class Lexer {
          // System.out.println("HashTable [Else]: " + words.get(currentT.toString()));
          System.out.println("HashTable [Else]: ");
       }
-
       return currentT;
-
    }
 
    public Token scan() throws IOException {
