@@ -20,10 +20,16 @@ public class Main {
 						System.out.println("BASE_T:      " + parsedToken.toString());
 						continue;
 					}
-					System.out.println("Token: " + parsedToken.toString());
-					System.out.write('\n');
+					else if(parsedToken.tag == 264){
+						System.out.println("ID:       " + parsedToken.toString());
+						continue;
+					}
+					else{
+						System.out.println("NUM:      " + parsedToken.toString());
+						continue;
+					}
 				} else {
-					System.out.println("Tokens: " + parsedToken.tag + "          " + parsedToken.toString());
+					System.out.println(parsedToken.toString() + "          " + parsedToken.toString());
 					System.out.write('\n');
 				}
 				// continue;
