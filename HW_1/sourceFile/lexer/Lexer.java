@@ -4,16 +4,15 @@ import symbols.Type;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class Lexer {
    public static int line = 1;
    char peek = ' ';
+   int i = 0;
    HashMap<String, Word> words = new HashMap<>();
 
    // Hashmap to return token names
    HashMap<Integer, String> tokName = new HashMap<>();
-   Scanner input;
 
    void reserve(Word w) {
       words.put(w.lexeme, w);
@@ -62,7 +61,6 @@ public class Lexer {
       reserve(Type.Float);
 
       tokenNamesInit(); // calls function to anlso initialize token names hashmap
-      input = new Scanner(System.in);
    }
 
    void readch() throws IOException {
@@ -89,13 +87,24 @@ public class Lexer {
    public Token getNextToken() throws IOException {
       Token currentTok = scan(); // will contain current token
 
-      if (currentTok.tag == 10) { // end of line token num is 10 for \n
-         line = line + 1;
-         input.nextLine();
-         System.out.println("Lines + 1" + line);
-      } else if (currentTok.tag == 13) { // EOF - end of file token num is 13 for \r - end of everything
+      while (currentTok.tag == 13) {
+         readch();
+         currentTok = scan();
+      }
+
+      // if (readch('\n')) { //readch skips tokens
+      // System.out.println("its the slash N");
+      // } else if (readch('\r')) {
+      // System.out.println("its the slash r");
+      // } else
+
+      if (currentTok.tag == 65535) { // \r
+         // if (peek == '\n') { // doesnt work
          return null;
-      } else if (tokName.get(currentTok.tag) == null) {
+         // } else if (currentTok.tag == 13) { // newline : \n
+         // // System.out.println("\n~newline~");
+      } else if ((tokName.get(currentTok.tag) == null) && (currentTok.tag != 13)) {
+         // } else if ((tokName.get(currentTok.tag) == null) && currentTok.tag != 13) {
          tokName.put(currentTok.tag, currentTok.toString());
       }
 
@@ -108,6 +117,8 @@ public class Lexer {
             continue;
          else if (peek == '\n')
             line = line + 1;
+         // else if (peek == '\r')
+         // return null;
          else
             break;
       }

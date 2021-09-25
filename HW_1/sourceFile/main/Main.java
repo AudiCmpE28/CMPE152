@@ -15,9 +15,9 @@ public class Main {
 				System.out.println("End of Lines");
 				break;
 			} else { // prints
-				// System.out.println("Token: " + parsedToken.tag);
 				System.out.println(mylexer.returnLabel(parsedToken.tag) + "   " + parsedToken.toString());
-				// continue;
+				// + " " + parsedToken.tag
+
 			}
 		}
 	}
