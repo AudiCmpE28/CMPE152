@@ -1,14 +1,14 @@
 package lexer;
 
 import symbols.Type;
-
-import java.io.IOException;
 import java.util.HashMap;
+import java.io.IOException;
 
 public class Lexer {
    public static int line = 1;
    char peek = ' ';
    HashMap<String, Word> words = new HashMap<>();
+   HashMap<Word, String> tag = new HashMap<>();
 
    void reserve(Word w) {
       words.put(w.lexeme, w);
@@ -23,7 +23,6 @@ public class Lexer {
 
       reserve(Word.True);
       reserve(Word.False);
-
       reserve(Type.Int);
       reserve(Type.Char);
       reserve(Type.Bool);
@@ -54,20 +53,11 @@ public class Lexer {
       }
 
       Token current_token = scan(); // will contain current token
-      // System.out.println("String:: " + current_token.toString());
-
       if (current_token.tag == 13) { // end of line token num is 13 for \r\n
-         System.out.println("Tag:: " + current_token.tag);
          return null;
       }
-
-      /*
-      
-      
-      */
-
+      // System.out.print("Tag: " + current_token.tag + "\t");
       return current_token;
-
    }
 
    public Token scan() throws IOException {
