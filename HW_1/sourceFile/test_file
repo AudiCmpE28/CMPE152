@@ -12,7 +12,8 @@ using std::endl;
 
 int main()
 {
-    Game rockPaperScissors;
-    rockPaperScissors.executeMatch();
+    double factor = 23.5;
+    int goat = -1;
+    bool states = true; 
     return 0;
 }
