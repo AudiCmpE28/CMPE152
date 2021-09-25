@@ -12,12 +12,16 @@ public class Main {
 			Token parsedToken = mylexer.getNextToken();
 
 			if (parsedToken == null) {
-				System.out.println("End of Lines");
+				// System.out.println("ERROR: Invalid Operation");
+				System.out.println("EOF");
 				break;
+				// } else if (parsedToken.toString() == "EOF") {
+				// System.out.println("EOF");
+				// break;
 			} else { // prints
-				// System.out.println("Token: " + parsedToken.tag);
 				System.out.println(mylexer.returnLabel(parsedToken.tag) + "   " + parsedToken.toString());
-				// continue;
+				// + " " + parsedToken.tag
+
 			}
 		}
 	}
