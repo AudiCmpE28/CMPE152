@@ -42,7 +42,7 @@ public class Lexer {
 
       tokName.put(266, "INDEX");
       tokName.put(268, "MINUS");
-
+      tokName.put(300, "EOF");
    }
 
    public Lexer() {
@@ -101,6 +101,7 @@ public class Lexer {
       if (currentTok.tag == 65535) { // \r
          // if (peek == '\n') { // doesnt work
          return null;
+
          // } else if (currentTok.tag == 13) { // newline : \n
          // // System.out.println("\n~newline~");
       } else if ((tokName.get(currentTok.tag) == null) && (currentTok.tag != 13)) {
