@@ -1,6 +1,8 @@
 package lexer;
 
 import symbols.Type;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
