@@ -10,8 +10,38 @@ public class Lexer {
    char peek = ' ';
    HashMap<String, Word> words = new HashMap<>();
 
+   // Hashmap to return token names
+   HashMap<Integer, String> tokName = new HashMap<>();
+
    void reserve(Word w) {
       words.put(w.lexeme, w);
+   }
+
+   void tokenNamesInit() {
+      tokName.put(256, "AND");
+      tokName.put(257, "BASE_TYPE");
+      tokName.put(258, "BREAK");
+      tokName.put(259, "DO");
+      tokName.put(260, "ELSE");
+      tokName.put(261, "EQ");
+      tokName.put(262, "FALSE");
+
+      // tokName.put(, "FOR");
+
+      tokName.put(263, "GE");
+      tokName.put(264, "ID");
+      tokName.put(265, "IF");
+      tokName.put(267, "LE");
+      tokName.put(269, "NE");
+      tokName.put(270, "NUM");
+      tokName.put(271, "OR");
+      tokName.put(272, "REAL");
+      tokName.put(274, "TRUE");
+      tokName.put(275, "WHILE");
+
+      tokName.put(266, "INDEX");
+      tokName.put(268, "MINUS");
+
    }
 
    public Lexer() {
@@ -28,6 +58,8 @@ public class Lexer {
       reserve(Type.Char);
       reserve(Type.Bool);
       reserve(Type.Float);
+
+      tokenNamesInit(); // calls function to anlso initialize token names hashmap
    }
 
    void readch() throws IOException {
@@ -42,6 +74,14 @@ public class Lexer {
       return true;
    }
 
+   public String returnLabel(int tokenTag) throws IOException {
+      String temp = tokName.get(tokenTag);
+      if (temp == null) {
+         return null;
+      }
+      return temp;
+   }
+
    public Token getNextToken() throws IOException {
       for (;; readch()) { // for readch is true
          if (peek == ' ' || peek == '\t') {
@@ -53,31 +93,15 @@ public class Lexer {
          }
       }
 
-      Token currentT = scan(); // will contain current token
-      // System.out.println("String:: " + currentT.toString());
+      Token currentTok = scan(); // will contain current token
 
-      if (currentT.tag == 13) { // end of line token num is 13 for \r\n
-         System.out.println("token:: " + currentT);
-         System.out.println("Tag:: " + currentT.tag);
+      if (currentTok.tag == 13) { // end of line token num is 13 for \r\n
          return null;
+      } else if (tokName.get(currentTok.tag) == null) {
+         tokName.put(currentTok.tag, currentTok.toString());
       }
 
-      Word temp = new Word(currentT.toString(), currentT.tag);
-
-      if (words.get(currentT.toString()) != null) {
-         // System.out.println("HashTable: " + words.get(temp.toString()));
-         System.out.println("HashTable: ");
-      } else if (temp.toString() == currentT.toString()) {
-         // System.out.println("Word Label: " + temp.toString());
-         System.out.println("Word Label: ");
-      } else {
-         reserve(temp); // adds stuff like { } ; [ ]
-         // System.out.println("HashTable [Else]: " + words.get(currentT.toString()));
-         System.out.println("HashTable [Else]: ");
-      }
-
-      return currentT;
-
+      return currentTok;
    }
 
    public Token scan() throws IOException {
