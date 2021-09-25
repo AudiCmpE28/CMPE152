@@ -12,7 +12,7 @@ public class Main {
 			Token parsedToken = mylexer.getNextToken();
 
 			if (parsedToken == null) {
-				System.out.println("End of Line");
+				System.out.println("End of Lines");
 				break;
 			} else { // prints
 				// System.out.println("Token: " + parsedToken.tag);
@@ -23,3 +23,6 @@ public class Main {
 	}
 
 }
+
+/* java main/Main.java */
+/* java main.Main < test_file */

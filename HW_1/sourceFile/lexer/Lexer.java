@@ -4,6 +4,7 @@ import symbols.Type;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Lexer {
    public static int line = 1;
@@ -12,6 +13,7 @@ public class Lexer {
 
    // Hashmap to return token names
    HashMap<Integer, String> tokName = new HashMap<>();
+   Scanner input;
 
    void reserve(Word w) {
       words.put(w.lexeme, w);
@@ -60,6 +62,7 @@ public class Lexer {
       reserve(Type.Float);
 
       tokenNamesInit(); // calls function to anlso initialize token names hashmap
+      input = new Scanner(System.in);
    }
 
    void readch() throws IOException {
@@ -74,6 +77,7 @@ public class Lexer {
       return true;
    }
 
+   // returns token name form hash map
    public String returnLabel(int tokenTag) throws IOException {
       String temp = tokName.get(tokenTag);
       if (temp == null) {
@@ -83,20 +87,13 @@ public class Lexer {
    }
 
    public Token getNextToken() throws IOException {
-      for (;; readch()) { // for readch is true
-         if (peek == ' ' || peek == '\t') {
-            continue;
-
-         } else if (peek == '\n') {
-            line = line + 1;
-         } else {
-            break;
-         }
-      }
-
       Token currentTok = scan(); // will contain current token
 
-      if (currentTok.tag == 13) { // end of line token num is 13 for \r\n
+      if (currentTok.tag == 10) { // end of line token num is 10 for \n
+         line = line + 1;
+         input.nextLine();
+         System.out.println("Lines + 1" + line);
+      } else if (currentTok.tag == 13) { // EOF - end of file token num is 13 for \r - end of everything
          return null;
       } else if (tokName.get(currentTok.tag) == null) {
          tokName.put(currentTok.tag, currentTok.toString());
