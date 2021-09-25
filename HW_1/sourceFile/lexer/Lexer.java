@@ -86,6 +86,7 @@ public class Lexer {
       for (;; readch()) { // for readch is true
          if (peek == ' ' || peek == '\t') {
             continue;
+
          } else if (peek == '\n') {
             line = line + 1;
          } else {
