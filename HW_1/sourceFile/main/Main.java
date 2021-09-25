@@ -11,13 +11,9 @@ public class Main {
 		while (true) {
 			Token parsedToken = mylexer.getNextToken();
 
-			if (parsedToken == null) {
-				// System.out.println("ERROR: Invalid Operation");
-				System.out.println("EOF");
-				break;
-				// } else if (parsedToken.toString() == "EOF") {
+			if (parsedToken.tag == '\uFFFF') {
 				// System.out.println("EOF");
-				// break;
+				break;
 			} else { // prints
 				System.out.println(mylexer.returnLabel(parsedToken.tag) + "   " + parsedToken.toString());
 				// + " " + parsedToken.tag

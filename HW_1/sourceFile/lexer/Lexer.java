@@ -85,25 +85,12 @@ public class Lexer {
    public Token getNextToken() throws IOException {
       Token currentTok = scan(); // will contain current token
 
-      while (currentTok.tag == 13) {
+      while (currentTok.tag == 13) { // checks for carriage return (CR) "\r"
          readch();
          currentTok = scan();
       }
 
-      // if (readch('\n')) { // readch skips tokens
-      // System.out.println("its the slash N");
-      // } else if (readch('\r')) {
-      // System.out.println("its the slash r");
-      // } else
-
-      if (currentTok.tag == 65535) { // \r
-         // if (peek == '\n') { // doesnt work
-         return null;
-
-         // } else if (currentTok.tag == 13) { // newline : \n
-         // // System.out.println("\n~newline~");
-      } else if ((tokName.get(currentTok.tag) == null) && (currentTok.tag != 13)) {
-         // } else if ((tokName.get(currentTok.tag) == null) && currentTok.tag != 13) {
+      if ((tokName.get(currentTok.tag) == null)) {
          tokName.put(currentTok.tag, currentTok.toString());
       }
 
@@ -187,6 +174,10 @@ public class Lexer {
          w = new Word(s, Tag.ID);
          words.put(s, w);
          return w;
+      }
+
+      if (peek == '\uFFFF') { // Check if EOF
+         return new Token('\uFFFF');
       }
 
       Token tok = new Token(peek);
