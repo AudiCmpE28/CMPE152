@@ -5,3 +5,14 @@
         do a = a+1; while(a < 100);
     }
 }
+
+#include <random>
+using std::cout;
+using std::endl;
+
+int main()
+{
+    Game rockPaperScissors;
+    rockPaperScissors.executeMatch();
+    return 0;
+}
