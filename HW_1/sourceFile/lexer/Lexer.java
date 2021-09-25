@@ -103,8 +103,6 @@ public class Lexer {
             continue;
          else if (peek == '\n')
             line = line + 1;
-         // else if (peek == '\r')
-         // return null;
          else
             break;
       }
@@ -176,9 +174,9 @@ public class Lexer {
          return w;
       }
 
-      if (peek == '\uFFFF') { // Check if EOF
-         return new Token('\uFFFF');
-      }
+      // if (peek == '\uFFFF') { // Check if EOF
+      // return new Token('\uFFFF');
+      // }
 
       Token tok = new Token(peek);
       peek = ' ';
