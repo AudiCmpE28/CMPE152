@@ -2,17 +2,12 @@ package lexer;
 
 import symbols.Type;
 import java.util.HashMap;
-<<<<<<< HEAD:Assignment1/HW1/src/lexer/Lexer.java
-import java.io.IOException;
-=======
 import java.util.Scanner;
->>>>>>> d7c9db188cd946268a660941480096972a476ce0:HW_1/sourceFile/lexer/Lexer.java
 
 public class Lexer {
    public static int line = 1;
    char peek = ' ';
    HashMap<String, Word> words = new HashMap<>();
-   HashMap<Word, String> tag = new HashMap<>();
 
    // Hashmap to return token names
    HashMap<Integer, String> tokName = new HashMap<>();
@@ -88,10 +83,6 @@ public class Lexer {
       return temp;
    }
 
-<<<<<<< HEAD:Assignment1/HW1/src/lexer/Lexer.java
-      Token current_token = scan(); // will contain current token
-      if (current_token.tag == 13) { // end of line token num is 13 for \r\n
-=======
    public Token getNextToken() throws IOException {
       Token currentTok = scan(); // will contain current token
 
@@ -100,18 +91,12 @@ public class Lexer {
          input.nextLine();
          System.out.println("Lines + 1" + line);
       } else if (currentTok.tag == 13) { // EOF - end of file token num is 13 for \r - end of everything
->>>>>>> d7c9db188cd946268a660941480096972a476ce0:HW_1/sourceFile/lexer/Lexer.java
          return null;
       } else if (tokName.get(currentTok.tag) == null) {
          tokName.put(currentTok.tag, currentTok.toString());
       }
-<<<<<<< HEAD:Assignment1/HW1/src/lexer/Lexer.java
-      // System.out.print("Tag: " + current_token.tag + "\t");
-      return current_token;
-=======
 
       return currentTok;
->>>>>>> d7c9db188cd946268a660941480096972a476ce0:HW_1/sourceFile/lexer/Lexer.java
    }
 
    public Token scan() throws IOException {
