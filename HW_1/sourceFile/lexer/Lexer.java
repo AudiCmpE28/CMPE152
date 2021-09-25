@@ -42,7 +42,6 @@ public class Lexer {
 
       tokName.put(266, "INDEX");
       tokName.put(268, "MINUS");
-      tokName.put(300, "EOF");
    }
 
    public Lexer() {
@@ -92,7 +91,7 @@ public class Lexer {
          currentTok = scan();
       }
 
-      // if (readch('\n')) { //readch skips tokens
+      // if (readch('\n')) { // readch skips tokens
       // System.out.println("its the slash N");
       // } else if (readch('\r')) {
       // System.out.println("its the slash r");
