@@ -12,7 +12,7 @@ public class Main {
 			Token parsedToken = mylexer.getNextToken();
 
 			if (parsedToken == null) {
-				System.out.println("ERROR: Invalid Token");
+				System.out.println("ERROR: NULL Detected");
 				break;
 			} else if (parsedToken.tag == '\uFFFF') {
 				// System.out.println("EOF");
