@@ -27,7 +27,7 @@ public class Lexer {
       tokName.put(261, "EQ");
       tokName.put(262, "FALSE");
 
-      // tokName.put(, "FOR");
+      tokName.put(276, "FOR");
 
       tokName.put(263, "GE");
       tokName.put(264, "ID");
@@ -50,6 +50,7 @@ public class Lexer {
       reserve(new Word("while", Tag.WHILE));
       reserve(new Word("do", Tag.DO));
       reserve(new Word("break", Tag.BREAK));
+      reserve(new Word("for", Tag.FOR));
 
       reserve(Word.True);
       reserve(Word.False);
@@ -89,6 +90,10 @@ public class Lexer {
          readch();
          currentTok = scan();
       }
+
+      // if (currentTok == null) {
+      // return null;
+      // }
 
       if (tokName.get(currentTok.tag) == null) {
          tokName.put(currentTok.tag, currentTok.toString());
