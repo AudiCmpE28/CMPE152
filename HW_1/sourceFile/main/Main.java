@@ -19,13 +19,11 @@ public class Main {
 				break;
 			} else { // prints
 				System.out.println(mylexer.returnLabel(parsedToken.tag) + "   " + parsedToken.toString());
-				// + " " + parsedToken.tag
-
 			}
 		}
 	}
 
 }
 
-/* java main/Main.java */
+/* javac main/Main.java */
 /* java main.Main < test_file */

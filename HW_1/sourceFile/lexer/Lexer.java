@@ -11,7 +11,7 @@ public class Lexer {
    int i = 0;
    HashMap<String, Word> words = new HashMap<>();
 
-   // Hashmap to return token names
+   // Hashmap to return token names or add them
    HashMap<Integer, String> tokName = new HashMap<>();
 
    void reserve(Word w) {
@@ -93,9 +93,7 @@ public class Lexer {
 
       if (currentTok.tag == 0) {
          return null;
-      }
-
-      if (tokName.get(currentTok.tag) == null) {
+      } else if (tokName.get(currentTok.tag) == null) {
          tokName.put(currentTok.tag, currentTok.toString());
       }
 
