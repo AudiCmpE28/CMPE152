@@ -91,9 +91,9 @@ public class Lexer {
          currentTok = scan();
       }
 
-      // if (currentTok == null) {
-      // return null;
-      // }
+      if (currentTok.tag == 0) {
+         return null;
+      }
 
       if (tokName.get(currentTok.tag) == null) {
          tokName.put(currentTok.tag, currentTok.toString());
