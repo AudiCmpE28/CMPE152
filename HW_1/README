@@ -1,19 +1,21 @@
 /* Project #1: Lexer and Token */
 
-1. If you use command line
-To compile in command line, enter the src directory and run
+1. Using Command Line enter the src directory:
+    cd HW_1/sourceFile 
 
-javac symbols/*.java
-javac lexer/*.java
-javac main/Main.java
+2. To compile in command line: 
+    javac symbols/*.java
+    javac lexer/*.java
+    javac main/Main.java
 
-2. To run the lexer in command line:
-java  main.Main
+3. To run the lexer in command line with file:
+    java  main.Main < your_test_file
 
-To run with a file:
-java  main.Main < test_file
+## Our Test file ##
+test_file, test_file2, and test_file3 all have an input
+followed by the result of the lexer parsing it.
 
-
+## Project Details: ##
 For this project, we added a function named "getNextToken()" in
 the lexer file. If there is a \r carriage, it handles it to move
 to the next line. We also created a new HashMap to keep track of 

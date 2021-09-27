@@ -1,3 +1,4 @@
+/*## INPUT ##*/
 {    
     int b; b = 1;    
     {        
@@ -6,18 +7,37 @@
     }
 }
 
-#include <random>
-using std::cout;
-using std::endl;
 
-int main()
-{
-    double factor = 23.5;
-    int goat = -1;
-    bool states = true; 
-    return 0;
-}
-
-for (bool 56){
-    
-}
+/*## OUTPUT-RESULTS: ##*/
+{   {
+BASE_TYPE   int
+ID   b
+;   ;
+ID   b
+=   =
+NUM   1
+;   ;
+{   {
+BASE_TYPE   int
+ID   a
+;   ;
+ID   a
+=   =
+NUM   2
+;   ;
+DO   do
+ID   a
+=   =
+ID   a
++   +
+NUM   1
+;   ;
+WHILE   while
+(   (
+ID   a
+<   <
+NUM   100
+)   )
+;   ;
+}   }
+}   }
