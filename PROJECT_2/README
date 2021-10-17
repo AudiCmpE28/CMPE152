@@ -23,11 +23,3 @@ javac main/Main.java
 To run the lexer in command line:
 
 java  main.Main < test_file
-
-2. If you use IntelliJ Idea IDE
-In the IntelliJ IDE, create a project and import the code. Then use
-the below steps to build and run:
-(1) Under "Run"->"Edit Configurations", put main.Main as main class.
-Specify your test file in "Redirect input from".
-(2) Click "Run"->"Run Main"
-
