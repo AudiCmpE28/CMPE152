@@ -1,7 +1,0 @@
-{
-    "ros.distro": "melodic",
-    "java.project.sourcePaths": [
-        // "PROJECT_1/sourceFiles",
-        "PROJECT_2/sourceFiles"
-    ]
-}
