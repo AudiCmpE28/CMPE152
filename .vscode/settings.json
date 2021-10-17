@@ -1,7 +1,0 @@
-{
-    "ros.distro": "melodic",
-    "java.project.sourcePaths": [
-        "Assignment1/HW1/src",
-        "Assignment1/Instructions/project1-lexer-sample/src/main"
-    ]
-}
