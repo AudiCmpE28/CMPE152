@@ -17,6 +17,9 @@ public class Logical extends Expr {
 
    public Type check(Type p1, Type p2) {
       if ( p1 == Type.Bool && p2 == Type.Bool ) return Type.Bool;
+      else if ( p1 == Type.Int && p2 == Type.Int ) return Type.Int;
+      else if ( p1 == Type.Char && p2 == Type.Char ) return Type.Char;
+      else if ( p1 == Type.Float && p2 == Type.Float ) return Type.Float;
       else return null;
    }
 }

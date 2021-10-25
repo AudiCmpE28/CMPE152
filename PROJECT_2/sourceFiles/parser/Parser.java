@@ -10,7 +10,7 @@ public class Parser {
 
    public Parser(Lexer l) throws IOException { lex = l; move(); }
 
-   void move() throws IOException { look = lex.scan(); }
+   void move() throws IOException { look = lex.getNextToken(); }
 
    void error(String s) { throw new Error("near line "+lex.line+": "+s); }
 
