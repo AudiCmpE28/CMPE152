@@ -18,7 +18,9 @@ public class Parser {
    }
 
    void move() throws IOException {
-      look = lex.scan();
+      // look = lex.scan();
+      look = lex.getNextToken();
+
    }
 
    void error(String s) {
@@ -53,7 +55,7 @@ public class Parser {
          Type p = type();
          Token tok = look;
          match(Tag.ID);
-         match(';');
+         match(';'); // ; or = int a; a = 1;
          Id id = new Id((Word) tok, p, used);
          top.put(tok, id);
          used = used + p.width;
@@ -79,7 +81,7 @@ public class Parser {
       Stmt savedStmt; // save enclosing loop for breaks
 
       switch (look.tag) {
-
+      // more case statements int i = 0;
       case ';':
          move();
          return Stmt.Null;
@@ -239,9 +241,6 @@ public class Parser {
          x = Constant.False;
          move();
          return x;
-      default:
-         error("syntax error");
-         return x;
       case Tag.ID:
          String s = look.toString();
          Id id = top.get(look);
@@ -249,6 +248,9 @@ public class Parser {
             error(look.toString() + " undeclared");
          move();
          return id;
+      default:
+         error("syntax error");
+         return x;
       }
    }
 }
