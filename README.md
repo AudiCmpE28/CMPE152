@@ -1,11 +1,9 @@
 # CMPE152
-<<<<<<< HEAD
 
-<<<<<<< HEAD
-Simon's Branch
-=======
-This is Thanhs Branch
->>>>>>> 2e72725d14e5915e9c904b94efb20cea65909329
-=======
-Deez Nuts
->>>>>>> 1e7aadcf5c6b8468cc53a49cf04a987fca1bf524
+Main Branch
+- Finalized and Functional Code Only
+
+To change the execution class path:
+    ctrl-shift-p
+    >Java: Configure Classpath
+    Add only 1 path (path to code you will run)

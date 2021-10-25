@@ -1,4 +1,11 @@
-Assignment1/.DS_Store
 /.vscode
-/.gitignore
-.vscode/settings.json
+
+PROJECT_1/sourceFiles/lexer/*.class
+PROJECT_1/sourceFiles/main/Main.class
+PROJECT_1/sourceFiles/symbols/*.class
+
+PROJECT_2/sourceFiles/inter/*.class
+PROJECT_2/sourceFiles/lexer/*.class
+PROJECT_2/sourceFiles/main/Main.class
+PROJECT_2/sourceFiles/parser/*.class
+PROJECT_2/sourceFiles/symbols/*.class
