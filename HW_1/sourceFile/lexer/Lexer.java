@@ -176,10 +176,6 @@ public class Lexer {
          return w;
       }
 
-      if (peek == '\uFFFF') { // Check if EOF
-         return new Token('\uFFFF');
-      }
-
       Token tok = new Token(peek);
       peek = ' ';
       return tok;
