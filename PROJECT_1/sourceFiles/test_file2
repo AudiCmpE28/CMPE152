@@ -1,0 +1,56 @@
+/*## INPUT ##*/
+#include <random>
+using std::cout;
+using std::endl;
+
+int main()
+{
+    double factor = 23.5;
+    int goat = -1;
+    bool states = true; 
+    return 0;
+}
+
+/*## OUTPUT-RESULTS: ##*/
+#   #
+ID   include
+<   <
+ID   random
+>   >
+ID   using
+ID   std
+:   :
+:   :
+ID   cout
+;   ;
+ID   using
+ID   std
+:   :
+:   :
+ID   endl
+;   ;
+BASE_TYPE   int
+ID   main
+(   (
+)   )
+{   {
+ID   double
+ID   factor
+=   =
+REAL   23.5
+;   ;
+BASE_TYPE   int
+ID   goat
+=   =
+-   -
+NUM   1
+;   ;
+BASE_TYPE   bool
+ID   states
+=   =
+TRUE   true
+;   ;
+ID   return
+NUM   0
+;   ;
+}   }
