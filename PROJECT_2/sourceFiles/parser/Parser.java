@@ -10,9 +10,9 @@ public class Parser {
 
    public Parser(Lexer l) throws IOException { lex = l; move(); }
 
-   void move() throws IOException { look = lex.scan(); }
+   void move() throws IOException { look = lex.getNextToken(); }
 
-   void error(String s) { throw new Error("near line "+lex.line+": "+s); }
+   void error(String s) { throw new Error("near line " + lex.line + ": "+s); }
 
    void match(int t) throws IOException {
       if( look.tag == t ) move();
@@ -55,7 +55,7 @@ public class Parser {
       Expr x;  Stmt s, s1, s2;
       Stmt savedStmt;         // save enclosing loop for breaks
 
-      switch( look.tag ) {
+      switch(look.tag) {
 
       case ';':
          move();

@@ -4,7 +4,8 @@ public class Prog extends Node {
     Block block;
 
     public Prog(Block blk) {
-        block = blk; children.add(block);
+        block = blk; 
+        children.add(block);
     }
 
     public String getNodeStr() {

@@ -6,12 +6,15 @@ import lexer.Lexer;
 import parser.Parser;
 
 import java.io.IOException;
-
+// { int r; int dd; int a; int d; r = a; dd = d; while( dd <= r ) dd = 2*dd;}
+// { bool a; {float a; a = 1.6;} {a = 1.6;}}
 public class Main {
 	public static void main(String[] args) throws IOException {
+		System.out.print("Enter the input: ");
 		Lexer lex = new Lexer();
 		Parser parse = new Parser(lex);
 		Prog tree = parse.program();
+		
 		System.out.printf("\nSyntax tree:\n");
 		String treeStr = printTree(tree);
 		System.out.printf(treeStr);
