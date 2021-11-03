@@ -55,10 +55,29 @@ public class Parser {
          Type p = type();
          Token tok = look;
          match(Tag.ID);
-         match(';'); // ; or = int a; a = 1;
-         Id id = new Id((Word) tok, p, used);
-         top.put(tok, id);
-         used = used + p.width;
+
+         if (look.tag == ';') { // match(;)
+            match(';');
+            System.out.println("Here for ;");
+            Id id = new Id((Word) tok, p, used);
+            top.put(tok, id);
+            used = used + p.width;
+
+         } else if (look.tag == '=') {
+            match('=');
+            System.out.println("Here for num");
+            Id id = new Id((Word) tok, p, used);
+            top.put(tok, id);
+            used = used + p.width;
+
+            // int r = 1;
+
+            // assign();
+         }
+         // match(';'); // ; or = int a; a = 1;
+         // Id id = new Id((Word) tok, p, used);
+         // top.put(tok, id);
+         // used = used + p.width;
       }
    }
 
@@ -81,7 +100,7 @@ public class Parser {
       Stmt savedStmt; // save enclosing loop for breaks
 
       switch (look.tag) {
-      // more case statements int i = 0;
+      // more case statements int i = 0; =
       case ';':
          move();
          return Stmt.Null;
