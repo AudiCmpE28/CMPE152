@@ -23,9 +23,8 @@ public class Parser {
    void move() throws IOException {
       // look = lex.scan();
       look = lex.getNextToken();
-
    }
-
+   
    void error(String s) {
       throw new Error("near line " + lex.line + ": " + s);
    }
