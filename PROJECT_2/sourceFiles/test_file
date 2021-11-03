@@ -1,0 +1,13 @@
+{ 
+int i = 0;
+bool value = true;
+float dec = 2.0;
+}
+
+{
+    int r; int dd; int a; int d; 
+    r = a; dd = d;
+    while( dd <= r ) {
+        dd = 2*dd;
+    }
+}
