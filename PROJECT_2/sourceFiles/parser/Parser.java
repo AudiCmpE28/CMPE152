@@ -10,7 +10,7 @@ public class Parser {
    private Lexer lex; // lexical analyzer for this parser
    private Token look; // lookahead token
    private Token lookBehind; // keep track of previous token
-   private boolean prevTok;
+   private boolean assignmentOperation; // Used for Assignment
 
    Env top = null; // current or top symbol table
    int used = 0; // storage used for declarations
@@ -53,17 +53,13 @@ public class Parser {
    }
 
    void decls() throws IOException {
-      prevTok = false;
+      assignmentOperation = false;
       while (look.tag == Tag.BASIC) { // D -> type ID ;
          Type p = type();
          Token tok = look;
-         // match(Tag.ID);
          if (look.tag == Tag.ID) {
             lookBehind = look;
             match(Tag.ID);
-            System.out.println("Grabbed variable:");
-            System.out.println(lookBehind.toString());
-
          }
 
          if (look.tag == ';') { // match(;)
@@ -73,25 +69,37 @@ public class Parser {
             used = used + p.width;
 
          } else if (look.tag == '=') {
-            // match('=');
-            Token temp = new Token(';');
-            System.out.println("Here for num");
+            match('=');
+            
             Id id = new Id((Word) tok, p, used);
             top.put(tok, id);
             used = used + p.width;
+            
+            switch(look.tag){
+               case Tag.NUM:
+               case Tag.REAL:
+                  if(!(p == Type.Int || p == Type.Float))
+                  error("Variable does not take numbers.");
+                  break;
 
-            prevTok = true; // assign();
+               case Tag.TRUE:
+               case Tag.FALSE:
+                  if(!(p == Type.Bool)){
+                     error("Varaible does not take boolean.");
+                  }
+                  break;
+            }
+
+            assignmentOperation = true; // assign();
             break;
          }
-         // match(';'); // ; or = int a; a = 1;
-         // Id id = new Id((Word) tok, p, used);
-         // top.put(tok, id);
-         // used = used + p.width;
       }
    }
 
    Type type() throws IOException {
-      Type p = (Type) look; // expect look.tag == Tag.BASIC
+      Type p = (Type) look; 
+      
+      // expect look.tag == Tag.BASIC
       match(Tag.BASIC);
       return p; // T -> basic
    }
@@ -171,17 +179,15 @@ public class Parser {
       Stmt stmt;
       Token t = look;
 
-      if (prevTok == true) {
-         System.out.println("PrevTok true");
-         // match(lookBehind.tag);
+      if (assignmentOperation == true) {
+
          Id id = top.get(lookBehind);
          if (id == null)
             error(lookBehind.toString() + " undeclared");
-         move();
          stmt = new Set(id, allexpr()); // S -> id = E ;
          match(';');
 
-         prevTok = false;
+         assignmentOperation = false;
          return stmt;
 
       } else {
@@ -195,7 +201,7 @@ public class Parser {
          return stmt;
       }
    }
-
+   
    Expr allexpr() throws IOException {
       Expr x = andexpr();
       while (look.tag == Tag.OR) {
@@ -298,3 +304,4 @@ public class Parser {
       }
    }
 }
+
