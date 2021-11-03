@@ -9,6 +9,9 @@ public class Parser {
 
    private Lexer lex; // lexical analyzer for this parser
    private Token look; // lookahead token
+   private Token lookBehind; // keep track of previous token
+   private boolean prevTok;
+
    Env top = null; // current or top symbol table
    int used = 0; // storage used for declarations
 
@@ -51,28 +54,35 @@ public class Parser {
    }
 
    void decls() throws IOException {
+      prevTok = false;
       while (look.tag == Tag.BASIC) { // D -> type ID ;
          Type p = type();
          Token tok = look;
-         match(Tag.ID);
+         // match(Tag.ID);
+         if (look.tag == Tag.ID) {
+            lookBehind = look;
+            match(Tag.ID);
+            System.out.println("Grabbed variable:");
+            System.out.println(lookBehind.toString());
+
+         }
 
          if (look.tag == ';') { // match(;)
             match(';');
-            System.out.println("Here for ;");
             Id id = new Id((Word) tok, p, used);
             top.put(tok, id);
             used = used + p.width;
 
          } else if (look.tag == '=') {
-            match('=');
+            // match('=');
+            Token temp = new Token(';');
             System.out.println("Here for num");
             Id id = new Id((Word) tok, p, used);
             top.put(tok, id);
             used = used + p.width;
 
-            // int r = 1;
-
-            // assign();
+            prevTok = true; // assign();
+            break;
          }
          // match(';'); // ; or = int a; a = 1;
          // Id id = new Id((Word) tok, p, used);
@@ -161,14 +171,30 @@ public class Parser {
    Stmt assign() throws IOException {
       Stmt stmt;
       Token t = look;
-      match(Tag.ID);
-      Id id = top.get(t);
-      if (id == null)
-         error(t.toString() + " undeclared");
-      move();
-      stmt = new Set(id, allexpr()); // S -> id = E ;
-      match(';');
-      return stmt;
+
+      if (prevTok == true) {
+         System.out.println("PrevTok true");
+         // match(lookBehind.tag);
+         Id id = top.get(lookBehind);
+         if (id == null)
+            error(lookBehind.toString() + " undeclared");
+         move();
+         stmt = new Set(id, allexpr()); // S -> id = E ;
+         match(';');
+
+         prevTok = false;
+         return stmt;
+
+      } else {
+         match(Tag.ID);
+         Id id = top.get(t);
+         if (id == null)
+            error(t.toString() + " undeclared");
+         move();
+         stmt = new Set(id, allexpr()); // S -> id = E ;
+         match(';');
+         return stmt;
+      }
    }
 
    Expr allexpr() throws IOException {
