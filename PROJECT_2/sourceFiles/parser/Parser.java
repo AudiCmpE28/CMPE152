@@ -112,7 +112,7 @@ public class Parser {
    }
 
    Stmt stmt() throws IOException {
-      Expr x;
+      Expr x, y, z;
       Stmt s, s1, s2;
       Stmt savedStmt; // save enclosing loop for breaks
 
@@ -146,6 +146,24 @@ public class Parser {
          whilenode.init(x, s1);
          Stmt.Enclosing = savedStmt; // reset Stmt.Enclosing
          return whilenode;
+      
+         case Tag.FOR:
+         For fornode = new For();
+         savedStmt = Stmt.Enclosing;
+         Stmt.Enclosing = fornode;
+         match(Tag.FOR);
+         match('(');
+         x = allexpr();
+         match(';');
+         y = allexpr();
+         match(';');
+         z = allexpr();
+         match(')');
+         s1 = stmt();
+
+         fornode.init(x,y,z,s1);
+
+
 
       case Tag.DO:
          Do donode = new Do();
@@ -180,10 +198,10 @@ public class Parser {
       Token t = look;
 
       if (assignmentOperation == true) {
-
          Id id = top.get(lookBehind);
          if (id == null)
             error(lookBehind.toString() + " undeclared");
+         
          stmt = new Set(id, allexpr()); // S -> id = E ;
          match(';');
 
