@@ -26,9 +26,8 @@ public class Lexer {
       tokName.put(260, "ELSE");
       tokName.put(261, "EQ");
       tokName.put(262, "FALSE");
-
-      tokName.put(276, "FOR");
-
+      tokName.put(276, "EOF");
+      tokName.put(277, "FOR");
       tokName.put(263, "GE");
       tokName.put(264, "ID");
       tokName.put(265, "IF");
@@ -100,7 +99,7 @@ public class Lexer {
       return currentTok;
    }
 
-   public Token scan() throws IOException {
+    public Token scan() throws IOException {
       for (;; readch()) { // while readch is true
          if (peek == ' ' || peek == '\t')
             continue;
