@@ -11,6 +11,7 @@ public class Parser {
    private Token look; // lookahead token
    private Token lookBehind; // keep track of previous token
    private boolean assignmentOperation; // Used for Assignment
+   private boolean forLoopFlag;
 
    Env top = null; // current or top symbol table
    int used = 0; // storage used for declarations
@@ -43,6 +44,7 @@ public class Parser {
 
    Block block() throws IOException { // block -> { decls stmts }
       match('{');
+      forLoopFlag = false;
       Env savedEnv = top;
       top = new Env(top);
       decls();
@@ -146,6 +148,7 @@ public class Parser {
 
       case Tag.FOR:
          For fornode = new For();
+         forLoopFlag = true; // used for i++
          savedStmt = Stmt.Enclosing;
          Stmt.Enclosing = fornode;
          match(Tag.FOR);
@@ -154,11 +157,14 @@ public class Parser {
          match(';');
          y = allexpr();
          match(';');
+         System.out.println("\n Before s2");
          s2 = stmt();
+         System.out.println("\n After s2");
          match(')');
          s3 = stmt();
          fornode.init(s1, y, s2, s3);
          Stmt.Enclosing = savedStmt;
+         forLoopFlag = false; // reset flag
          return fornode;
 
       case Tag.DO:
@@ -185,9 +191,9 @@ public class Parser {
          return block();
 
       case Tag.BASIC:
+
          Type p = type();
          Token tok = look; // tok = variable name
-
          if (look.tag == Tag.ID) {
             lookBehind = look;
             match(Tag.ID);
@@ -221,63 +227,35 @@ public class Parser {
          stmt = new Set(id, allexpr()); // S -> id = E ;
          assignmentOperation = false;
          return stmt;
-
+         // }else if(t.tag == Tag.INC){
+         // }else if(t.tag == Tag.DEC){
       } else {
          match(Tag.ID);
          Id id = top.get(t);
-         if (id == null)
+
+         if (id == null) {
             error(t.toString() + " undeclared");
+         }
+         System.out.println("\n before move");
+
+         if (look.tag == Tag.INC) {
+            System.out.println(look.toString());
+            stmt = new Set(id, allexpr()); // S -> id = E ;
+            move();
+            // if(forLoopFlag)
+            // return stmt
+            // match(';');
+            return stmt;
+         }
+
          move();
+
          stmt = new Set(id, allexpr()); // S -> id = E ;
          match(';');
          return stmt;
       }
+
    }
-
-   // Stmt getstmt() throws IOException{
-   // Stmt stmt;
-
-   // // Checking if its argument 1 (declaring a new var)
-   // if(look.tag == Tag.BASIC){
-   // Type p = type();
-   // Token tok = look;
-
-   // if (look.tag == Tag.ID)
-   // {
-   // lookBehind = look;
-   // match(Tag.ID);
-   // match('=');
-
-   // Id id = new Id((Word) tok, p, used);
-   // used = used + p.width;
-
-   // switch(look.tag)
-   // {
-   // case Tag.NUM:
-   // case Tag.REAL:
-   // if(!(p == Type.Int || p == Type.Float))
-   // error("Variable does not take numbers.");
-   // break;
-   // case Tag.TRUE:
-   // case Tag.FALSE:
-   // if(!(p == Type.Bool))
-   // error("Varaible does not take boolean.");
-   // break;
-   // }
-   // stmt = new Set(id, allexpr()); // S -> id = E ;
-
-   // return stmt;
-   // }
-   // }
-
-   // return stmt;
-   // }
-   // stmt = new Set(id, allexpr()); // S -> id = E ;
-
-   // return stmt;
-   // }
-   // }
-   // }
 
    Expr allexpr() throws IOException {
       Expr x = andexpr();
@@ -375,6 +353,9 @@ public class Parser {
             error(look.toString() + " undeclared");
          move();
          return id;
+      case Tag.INC:
+         String s = look.toString();
+
       default:
          error("syntax error");
          return x;

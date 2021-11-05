@@ -1,5 +1,1 @@
-{
-int r; int dd; int a; int d;
-r = a; dd = d;
-while( dd <= r ) dd = 2*dd;   
-}
+{for(int i = 0; i < 15; i++){}}

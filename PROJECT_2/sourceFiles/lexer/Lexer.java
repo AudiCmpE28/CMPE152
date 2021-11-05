@@ -41,6 +41,9 @@ public class Lexer {
 
       tokName.put(266, "INDEX");
       tokName.put(268, "MINUS");
+
+      tokName.put(278, "INC");
+      tokName.put(279, "DEC");
    }
 
    public Lexer() {
@@ -99,7 +102,7 @@ public class Lexer {
       return currentTok;
    }
 
-    public Token scan() throws IOException {
+   public Token scan() throws IOException {
       for (;; readch()) { // while readch is true
          if (peek == ' ' || peek == '\t')
             continue;
@@ -139,6 +142,16 @@ public class Lexer {
             return Word.ge;
          else
             return new Token('>');
+      case '+':
+         if (readch('+'))
+            return Word.inc;
+         else
+            return new Token('+');
+      case '-':
+         if (readch('-'))
+            return Word.dec;
+         else
+            return new Token('-');
       }
 
       if (Character.isDigit(peek)) {
