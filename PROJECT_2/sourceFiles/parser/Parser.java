@@ -90,7 +90,6 @@ public class Parser {
                break;
             }
             assignmentOperation = true; // assign();
-            break;
          }
       }
    }
@@ -112,11 +111,10 @@ public class Parser {
 
    Stmt stmt() throws IOException {
       Expr x, y, z;
-      Stmt s, s1, s2;
+      Stmt s, s1, s2, s3;
       Stmt savedStmt; // save enclosing loop for breaks
 
       switch (look.tag) {
-      // more case statements int i = 0; =
       case ';':
          move();
          return Stmt.Null;
@@ -156,10 +154,10 @@ public class Parser {
          match(';');
          y = allexpr();
          match(';');
-         z = allexpr();
+         s2 = stmt();
          match(')');
-         s1 = stmt();
-         // fornode.init(x,y,z,s1);
+         s3 = stmt();
+         fornode.init(s1, y, s2, s3);
          Stmt.Enclosing = savedStmt;
          return fornode;
 
@@ -186,6 +184,26 @@ public class Parser {
       case '{':
          return block();
 
+      case Tag.BASIC:
+         Type p = type();
+         Token tok = look; // tok = variable name
+
+         if (look.tag == Tag.ID) {
+            lookBehind = look;
+            match(Tag.ID);
+            match('=');
+
+            Id id = new Id((Word) tok, p, used);
+
+            top.put(tok, id);
+
+            used = used + p.width;
+
+            assignmentOperation = true;
+
+            return assign();
+         }
+
       default:
          return assign();
       }
@@ -201,8 +219,6 @@ public class Parser {
             error(lookBehind.toString() + " undeclared");
 
          stmt = new Set(id, allexpr()); // S -> id = E ;
-         match(';');
-
          assignmentOperation = false;
          return stmt;
 
@@ -218,12 +234,11 @@ public class Parser {
       }
    }
 
-   // Stmt optexpr() throws IOException{
+   // Stmt getstmt() throws IOException{
    // Stmt stmt;
 
+   // // Checking if its argument 1 (declaring a new var)
    // if(look.tag == Tag.BASIC){
-   // System.out.println("Entered If Statement!");
-
    // Type p = type();
    // Token tok = look;
 
@@ -248,6 +263,14 @@ public class Parser {
    // if(!(p == Type.Bool))
    // error("Varaible does not take boolean.");
    // break;
+   // }
+   // stmt = new Set(id, allexpr()); // S -> id = E ;
+
+   // return stmt;
+   // }
+   // }
+
+   // return stmt;
    // }
    // stmt = new Set(id, allexpr()); // S -> id = E ;
 
