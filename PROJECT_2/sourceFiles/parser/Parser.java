@@ -148,7 +148,7 @@ public class Parser {
 
       case Tag.FOR:
          For fornode = new For();
-         forLoopFlag = true; // used for i++
+         forLoopFlag = true; // used for i++,i--,--i,++i
          savedStmt = Stmt.Enclosing;
          Stmt.Enclosing = fornode;
          match(Tag.FOR);
@@ -157,9 +157,7 @@ public class Parser {
          match(';');
          y = allexpr();
          match(';');
-         System.out.println("\n Before s2");
          s2 = stmt();
-         System.out.println("\n After s2");
          match(')');
          s3 = stmt();
          fornode.init(s1, y, s2, s3);
@@ -191,26 +189,27 @@ public class Parser {
          return block();
 
       case Tag.BASIC:
+         decls();
+         // System.out.println("\n Basic");
+         return assign();
 
-         Type p = type();
-         Token tok = look; // tok = variable name
-         if (look.tag == Tag.ID) {
-            lookBehind = look;
-            match(Tag.ID);
-            match('=');
+      // Type p = type();
+      // Token tok = look; // tok = variable name
+      // if (look.tag == Tag.ID) {
+      // lookBehind = look;
+      // match(Tag.ID);
+      // match('=');
 
-            Id id = new Id((Word) tok, p, used);
+      // Id id = new Id((Word) tok, p, used);
+      // top.put(tok, id);
+      // used = used + p.width;
+      // assignmentOperation = true;
 
-            top.put(tok, id);
-
-            used = used + p.width;
-
-            assignmentOperation = true;
-
-            return assign();
-         }
+      // return assign();
+      // }
 
       default:
+         // System.out.println("\n Default");
          return assign();
       }
    }
@@ -227,8 +226,27 @@ public class Parser {
          stmt = new Set(id, allexpr()); // S -> id = E ;
          assignmentOperation = false;
          return stmt;
-         // }else if(t.tag == Tag.INC){
-         // }else if(t.tag == Tag.DEC){
+
+         // if -- or ++ followed by variable
+      } else if (t.tag == Tag.INC || t.tag == Tag.DEC) {
+         Expr inc_dec = allexpr(); // expression of ++ or --
+         move(); // move to variable
+         Id id = top.get(look);
+         if (id == null) {
+            error(t.toString() + " undeclared");
+         }
+
+         match(Tag.ID);
+         stmt = new Set(id, inc_dec); // inc_dec since in front
+
+         if (forLoopFlag) {
+            return stmt;
+         }
+
+         /* Normal operation */
+         match(';');
+         return stmt;
+
       } else {
          match(Tag.ID);
          Id id = top.get(t);
@@ -236,20 +254,19 @@ public class Parser {
          if (id == null) {
             error(t.toString() + " undeclared");
          }
-         System.out.println("\n before move");
 
-         if (look.tag == Tag.INC) {
-            System.out.println(look.toString());
-            stmt = new Set(id, allexpr()); // S -> id = E ;
+         // if the variable follows ++ OR --
+         if (look.tag == Tag.INC || look.tag == Tag.DEC) {
+            stmt = new Set(id, allexpr());
             move();
-            // if(forLoopFlag)
-            // return stmt
-            // match(';');
+            if (forLoopFlag) { // if in for loop, then no ';' after
+               return stmt;
+            }
+            match(';');
             return stmt;
          }
-
+         /* Normal case if its not followed by ++ or -- */
          move();
-
          stmt = new Set(id, allexpr()); // S -> id = E ;
          match(';');
          return stmt;
@@ -324,6 +341,11 @@ public class Parser {
 
    Expr factor() throws IOException {
       Expr x = null;
+      // optimized to use one case statement since same function
+      if (look.tag == Tag.INC || look.tag == Tag.DEC) {
+         x = new Constant(look, Type.Int);
+         return x;
+      }
       switch (look.tag) {
       case '(':
          move();
@@ -353,9 +375,6 @@ public class Parser {
             error(look.toString() + " undeclared");
          move();
          return id;
-      case Tag.INC:
-         String s = look.toString();
-
       default:
          error("syntax error");
          return x;
