@@ -33,10 +33,29 @@ public class Parser {
 
    void decls() throws IOException {
       while( look.tag == Tag.BASIC ) {   // D -> type ID ;
-         Type p = type(); Token tok = look; match(Tag.ID); match(';');
-         Id id = new Id((Word)tok, p, used);
-         top.put( tok, id );
-         used = used + p.width;
+         Type p = type(); 
+         Token tok = look; 
+         match(Tag.ID);
+
+         if(look.tag == ';'){
+            System.out.println("Im in the first case");
+            match(';');
+            Id id = new Id((Word)tok, p, used);
+            top.put( tok, id );
+            used = used + p.width;
+         }else{
+            Stmt stmt;
+            
+            match('='); 
+            match(Tag.NUM);
+            match(';');
+            Id id = new Id((Word)tok, p, used);
+            top.put( tok, id );
+            used = used + p.width;
+
+            System.out.println("The End");
+         }
+
       }
    }
 
@@ -92,6 +111,7 @@ public class Parser {
          match(Tag.BREAK); match(';');
          return new Break();
 
+
       case '{':
          return block();
 
@@ -105,7 +125,8 @@ public class Parser {
       match(Tag.ID);
       Id id = top.get(t);
       if( id == null ) error(t.toString() + " undeclared");
-      move();  stmt = new Set(id, allexpr());  // S -> id = E ;
+      move();  
+      stmt = new Set(id, allexpr());  // S -> id = E ;
       match(';');
       return stmt;
    }
