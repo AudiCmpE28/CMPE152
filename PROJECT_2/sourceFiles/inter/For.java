@@ -4,18 +4,23 @@ import symbols.Type;
 
 public class For extends Stmt {
 
-   Expr expr1, expr2, expr3; Stmt stmt;
+   Expr expr; Stmt stmt_1, stmt_2, stmt_in_block;
 
-   public For() { expr1 = expr2 = expr3 = null; stmt = null; } 
+   public For() {expr = null; stmt_1 = stmt_2 = stmt_in_block = null; } 
 
-   public void init(Expr arg1, Expr arg2, Expr arg3, Stmt s) {
-      expr1 = arg1; expr2 = arg2; expr3 = arg3;  stmt = s;
-      if( expr2.type != Type.Bool ) expr2.error("boolean required in For loop");
+   public void init(Stmt arg1, Expr arg2, Stmt arg3, Stmt s) {
 
-      children.add(expr1);
-      children.add(expr2);
-      children.add(expr3);
-      children.add(stmt);
+      stmt_1 = arg1;
+      expr = arg2;
+      stmt_2 = arg3;
+      stmt_in_block = s;
+
+      if( expr.type != Type.Bool ) expr.error("boolean required in For loop");
+
+      children.add(stmt_1);
+      children.add(expr);
+      children.add(stmt_2);
+      children.add(stmt_in_block);
    }
 
    public String getNodeStr() {
