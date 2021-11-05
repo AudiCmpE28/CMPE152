@@ -24,7 +24,7 @@ public class Parser {
       // look = lex.scan();
       look = lex.getNextToken();
    }
-   
+
    void error(String s) {
       throw new Error("near line " + lex.line + ": " + s);
    }
@@ -70,24 +70,24 @@ public class Parser {
 
          } else if (look.tag == '=') {
             match('=');
-            
+
             Id id = new Id((Word) tok, p, used);
             top.put(tok, id);
             used = used + p.width;
-            
-            switch(look.tag){
-               case Tag.NUM:
-               case Tag.REAL:
-                  if(!(p == Type.Int || p == Type.Float))
-                  error("Variable does not take numbers.");
-                  break;
 
-               case Tag.TRUE:
-               case Tag.FALSE:
-                  if(!(p == Type.Bool)){
-                     error("Varaible does not take boolean.");
-                  }
-                  break;
+            switch (look.tag) {
+            case Tag.NUM:
+            case Tag.REAL:
+               if (!(p == Type.Int || p == Type.Float))
+                  error("Variable does not take numbers.");
+               break;
+
+            case Tag.TRUE:
+            case Tag.FALSE:
+               if (!(p == Type.Bool)) {
+                  error("Varaible does not take boolean.");
+               }
+               break;
             }
             assignmentOperation = true; // assign();
             break;
@@ -96,8 +96,8 @@ public class Parser {
    }
 
    Type type() throws IOException {
-      Type p = (Type) look; 
-      
+      Type p = (Type) look;
+
       // expect look.tag == Tag.BASIC
       match(Tag.BASIC);
       return p; // T -> basic
@@ -145,7 +145,7 @@ public class Parser {
          whilenode.init(x, s1);
          Stmt.Enclosing = savedStmt; // reset Stmt.Enclosing
          return whilenode;
-      
+
       case Tag.FOR:
          For fornode = new For();
          savedStmt = Stmt.Enclosing;
@@ -159,7 +159,7 @@ public class Parser {
          z = allexpr();
          match(')');
          s1 = stmt();
-         fornode.init(x,y,z,s1);
+         // fornode.init(x,y,z,s1);
          Stmt.Enclosing = savedStmt;
          return fornode;
 
@@ -199,7 +199,7 @@ public class Parser {
          Id id = top.get(lookBehind);
          if (id == null)
             error(lookBehind.toString() + " undeclared");
-         
+
          stmt = new Set(id, allexpr()); // S -> id = E ;
          match(';');
 
@@ -219,43 +219,43 @@ public class Parser {
    }
 
    // Stmt optexpr() throws IOException{
-   //    Stmt stmt;
+   // Stmt stmt;
 
-   //    if(look.tag == Tag.BASIC){
-   //       System.out.println("Entered If Statement!");
+   // if(look.tag == Tag.BASIC){
+   // System.out.println("Entered If Statement!");
 
-   //       Type p = type();
-   //       Token tok = look;
+   // Type p = type();
+   // Token tok = look;
 
-   //       if (look.tag == Tag.ID) 
-   //       {
-   //          lookBehind = look;
-   //          match(Tag.ID);
-   //          match('=');
-            
-   //          Id id = new Id((Word) tok, p, used);
-   //          used = used + p.width;
-            
-   //          switch(look.tag)
-   //          {
-   //             case Tag.NUM:
-   //             case Tag.REAL:
-   //                if(!(p == Type.Int || p == Type.Float))
-   //                   error("Variable does not take numbers.");
-   //                break;
-   //             case Tag.TRUE:
-   //             case Tag.FALSE:
-   //                if(!(p == Type.Bool))
-   //                   error("Varaible does not take boolean.");
-   //                break;
-   //          }
-   //          stmt = new Set(id, allexpr()); // S -> id = E ;
+   // if (look.tag == Tag.ID)
+   // {
+   // lookBehind = look;
+   // match(Tag.ID);
+   // match('=');
 
-   //          return stmt;
-   //       }
-   //    }
+   // Id id = new Id((Word) tok, p, used);
+   // used = used + p.width;
+
+   // switch(look.tag)
+   // {
+   // case Tag.NUM:
+   // case Tag.REAL:
+   // if(!(p == Type.Int || p == Type.Float))
+   // error("Variable does not take numbers.");
+   // break;
+   // case Tag.TRUE:
+   // case Tag.FALSE:
+   // if(!(p == Type.Bool))
+   // error("Varaible does not take boolean.");
+   // break;
    // }
-   
+   // stmt = new Set(id, allexpr()); // S -> id = E ;
+
+   // return stmt;
+   // }
+   // }
+   // }
+
    Expr allexpr() throws IOException {
       Expr x = andexpr();
       while (look.tag == Tag.OR) {
@@ -358,4 +358,3 @@ public class Parser {
       }
    }
 }
-

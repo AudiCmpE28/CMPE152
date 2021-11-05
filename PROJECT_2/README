@@ -22,4 +22,4 @@ javac main/Main.java
 
 To run the lexer in command line:
 
-java  main.Main < test_file
+java main.Main < test_file
