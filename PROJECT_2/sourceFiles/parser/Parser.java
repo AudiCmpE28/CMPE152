@@ -89,7 +89,6 @@ public class Parser {
                   }
                   break;
             }
-
             assignmentOperation = true; // assign();
             break;
          }
@@ -147,23 +146,22 @@ public class Parser {
          Stmt.Enclosing = savedStmt; // reset Stmt.Enclosing
          return whilenode;
       
-         case Tag.FOR:
+      case Tag.FOR:
          For fornode = new For();
          savedStmt = Stmt.Enclosing;
          Stmt.Enclosing = fornode;
          match(Tag.FOR);
          match('(');
-         x = allexpr();
+         s1 = stmt();
          match(';');
          y = allexpr();
          match(';');
          z = allexpr();
          match(')');
          s1 = stmt();
-
          fornode.init(x,y,z,s1);
-
-
+         Stmt.Enclosing = savedStmt;
+         return fornode;
 
       case Tag.DO:
          Do donode = new Do();
@@ -219,6 +217,44 @@ public class Parser {
          return stmt;
       }
    }
+
+   // Stmt optexpr() throws IOException{
+   //    Stmt stmt;
+
+   //    if(look.tag == Tag.BASIC){
+   //       System.out.println("Entered If Statement!");
+
+   //       Type p = type();
+   //       Token tok = look;
+
+   //       if (look.tag == Tag.ID) 
+   //       {
+   //          lookBehind = look;
+   //          match(Tag.ID);
+   //          match('=');
+            
+   //          Id id = new Id((Word) tok, p, used);
+   //          used = used + p.width;
+            
+   //          switch(look.tag)
+   //          {
+   //             case Tag.NUM:
+   //             case Tag.REAL:
+   //                if(!(p == Type.Int || p == Type.Float))
+   //                   error("Variable does not take numbers.");
+   //                break;
+   //             case Tag.TRUE:
+   //             case Tag.FALSE:
+   //                if(!(p == Type.Bool))
+   //                   error("Varaible does not take boolean.");
+   //                break;
+   //          }
+   //          stmt = new Set(id, allexpr()); // S -> id = E ;
+
+   //          return stmt;
+   //       }
+   //    }
+   // }
    
    Expr allexpr() throws IOException {
       Expr x = andexpr();
