@@ -79,13 +79,21 @@ public class Parser {
 
             switch (look.tag) {
             case Tag.NUM:
-               break;
-            case Tag.REAL:
-               if (!(p == Type.Int || p == Type.Float))
-                  error("Variable does not take numbers.");
+               if(!(p == Type.Int))
+                  error("Variable does not take integer whole numbers.");
                break;
 
+            case Tag.REAL:
+               if(!(p == Type.Float))
+                  error("Variable does not take all real numbers.");
+                  break;
+
             case Tag.TRUE:
+               if (!(p == Type.Bool)) {
+                  error("Varaible does not take boolean.");
+               }
+               break;
+
             case Tag.FALSE:
                if (!(p == Type.Bool)) {
                   error("Varaible does not take boolean.");
