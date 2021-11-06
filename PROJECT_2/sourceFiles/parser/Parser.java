@@ -1,3 +1,4 @@
+
 package parser;
 
 import java.io.*;
@@ -80,9 +81,9 @@ public class Parser {
             switch(look.tag){
                case Tag.NUM:
                break;
-               case Tag.REAL: //case for chars
-                  if(!(p == Type.Int || p == Type.Float))
-                  error("Variable does not take numbers.");
+               case Tag.REAL:
+                  if(!(p == Type.Float))
+                  error("Variable does not take all real numbers.");
                   break;
 
                case Tag.TRUE: // case for bool
