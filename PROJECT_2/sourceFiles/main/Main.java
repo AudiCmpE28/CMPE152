@@ -14,7 +14,6 @@ public class Main {
 		Lexer lex = new Lexer();
 		Parser parse = new Parser(lex);
 		Prog tree = parse.program();
-		
 		System.out.printf("\nSyntax tree:\n");
 		String treeStr = printTree(tree);
 		System.out.printf(treeStr);

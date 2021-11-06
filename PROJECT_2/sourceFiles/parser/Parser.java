@@ -30,10 +30,11 @@ public class Parser {
    }
 
    void match(int t) throws IOException {
+      
       if (look.tag == t)
          move();
-      else
-         error("syntax error");
+      else 
+         error("Syntax error");
    }
 
    public Prog program() throws IOException { // program -> block
@@ -75,18 +76,28 @@ public class Parser {
             top.put(tok, id);
             used = used + p.width;
             
+            //System.out.print("Look.tag = "+look.tag);
             switch(look.tag){
                case Tag.NUM:
-               case Tag.REAL:
+               break;
+               case Tag.REAL: //case for chars
                   if(!(p == Type.Int || p == Type.Float))
                   error("Variable does not take numbers.");
                   break;
 
-               case Tag.TRUE:
-               case Tag.FALSE:
+               case Tag.TRUE: // case for bool
+                  if(!(p == Type.Bool))
+                     error("Varaible does not take boolean.");
+                  
+               case Tag.FALSE: // case for bool
                   if(!(p == Type.Bool)){
                      error("Varaible does not take boolean.");
                   }
+                  break;
+
+               case 39://When it reads '
+                  if(!(p == Type.Char))
+                     error("Variable does not take characters.");
                   break;
             }
             assignmentOperation = true; // assign();
@@ -159,7 +170,7 @@ public class Parser {
          z = allexpr();
          match(')');
          s1 = stmt();
-         fornode.init(x,y,z,s1);
+         //fornode.init(x,y,z,s1);
          Stmt.Enclosing = savedStmt;
          return fornode;
 
@@ -198,6 +209,7 @@ public class Parser {
 
       if (assignmentOperation == true) {
          Id id = top.get(lookBehind);
+
          if (id == null)
             error(lookBehind.toString() + " undeclared");
          
@@ -207,7 +219,7 @@ public class Parser {
          assignmentOperation = false;
          return stmt;
 
-      } else {
+      } else
          match(Tag.ID);
          Id id = top.get(t);
          if (id == null)
@@ -217,7 +229,7 @@ public class Parser {
          match(';');
          return stmt;
       }
-   }
+   
 
    // Stmt optexpr() throws IOException{
    //    Stmt stmt;
