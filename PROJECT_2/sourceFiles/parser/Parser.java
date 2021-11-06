@@ -79,6 +79,7 @@ public class Parser {
 
             switch (look.tag) {
             case Tag.NUM:
+               break;
             case Tag.REAL:
                if (!(p == Type.Int || p == Type.Float))
                   error("Variable does not take numbers.");
@@ -89,6 +90,11 @@ public class Parser {
                if (!(p == Type.Bool)) {
                   error("Varaible does not take boolean.");
                }
+               break;
+               
+            case 39://When it reads '
+               if(!(p == Type.Char))
+                  error("Variable does not take characters.");
                break;
             }
             assignmentOperation = true; // assign();
